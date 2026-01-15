@@ -1,0 +1,20 @@
+name: Continuous Integration
+on: [push]
+jobs:
+  test-and-train:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: make install
+      - name: Run Training
+        run: make train
+      - name: Archive Model
+        uses: actions/upload-artifact@v4
+        with:
+          name: trained-model
+          path: Model/dummy_model.pkl
